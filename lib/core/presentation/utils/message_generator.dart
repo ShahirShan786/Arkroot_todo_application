@@ -8,6 +8,12 @@ class MessageGenerator {
           "To explore in-depth instructions for utilizing this rapid starter Flutter project, head over to https://github.com/midhunarmid/to_do_app to kick off your journey.",
       "login-title": "Login to your\nAccount",
       "sample-description": "This is the page of Arkroot",
+      "signup-title": "Create Your\nAccount",
+      "email-already-in-use" : 'This email address is already registered. Please use a different email or sign in instead.',
+      "weak-password" : "Password is too weak. Please choose a stronger password with at least 6 characters.",
+      "invalid-email" : "Please enter a valid email address.",
+      "network-request-failed" : "Network error. Please check your internet connection and try again."
+      
     },
   };
 

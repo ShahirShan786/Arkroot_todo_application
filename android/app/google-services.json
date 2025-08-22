@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "696485219778",
+    "project_id": "arkroot-todo-app",
+    "storage_bucket": "arkroot-todo-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:696485219778:android:4c816b2b4da44d3d315a5b",
+        "android_client_info": {
+          "package_name": "com.arkroot_todo_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB80QP_WfCYmWGe_n9VS2YpZhhFV6q7zA0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
