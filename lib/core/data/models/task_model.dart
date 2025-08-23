@@ -15,40 +15,42 @@ class TaskModel {
     required this.updatedAt,
   });
 
-  /// From Firestore document
-  factory TaskModel.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
-    final data = doc.data()!;
+  // This is the critical method that needs to be correct
+  factory TaskModel.fromDoc(QueryDocumentSnapshot<Map<String, dynamic>> doc) {
+    try {
+      final data = doc.data();
+      return TaskModel(
+        id: doc.id,
+        content: data['content'] ?? '',
+        isCompleted: data['isCompleted'] ?? false,
+        createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+        updatedAt: (data['updatedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      );
+    } catch (e) {
+      print('Error parsing task document ${doc.id}: $e');
+      print('Document data: ${doc.data()}');
+      rethrow;
+    }
+  }
+
+  // Alternative factory for DocumentSnapshot (if you need it elsewhere)
+  factory TaskModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc) {
+    final data = doc.data() ?? {};
     return TaskModel(
       id: doc.id,
-      content: data["content"] ?? "",
-      isCompleted: data["isCompleted"] ?? false,
-      createdAt: (data["createdAt"] as Timestamp).toDate(),
-      updatedAt: (data["updatedAt"] as Timestamp).toDate(),
+      content: data['content'] ?? '',
+      isCompleted: data['isCompleted'] ?? false,
+      createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      updatedAt: (data['updatedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
   }
 
-  /// To Firestore map
   Map<String, dynamic> toMap() {
     return {
-      "content": content,
-      "isCompleted": isCompleted,
-      "createdAt": createdAt,
-      "updatedAt": updatedAt,
+      'content': content,
+      'isCompleted': isCompleted,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
     };
-  }
-
-  /// Copy with (for updating values immutably)
-  TaskModel copyWith({
-    String? content,
-    bool? isCompleted,
-    DateTime? updatedAt,
-  }) {
-    return TaskModel(
-      id: id,
-      content: content ?? this.content,
-      isCompleted: isCompleted ?? this.isCompleted,
-      createdAt: createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-    );
   }
 }

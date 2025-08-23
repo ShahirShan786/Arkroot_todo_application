@@ -12,7 +12,10 @@ class MessageGenerator {
       "email-already-in-use" : 'This email address is already registered. Please use a different email or sign in instead.',
       "weak-password" : "Password is too weak. Please choose a stronger password with at least 6 characters.",
       "invalid-email" : "Please enter a valid email address.",
-      "network-request-failed" : "Network error. Please check your internet connection and try again."
+      "network-request-failed" : "Network error. Please check your internet connection and try again.",
+      "delete_message" : "Are you sure you want to delete this?",
+      "no_task" : "You don’t have any tasks yet.",
+      "no_task_dec" : "Start adding tasks and manage your\ntime effectively."
       
     },
   };
@@ -22,6 +25,8 @@ class MessageGenerator {
       "OK": "OK",
       "sign_in": "Sign In",
       "google-sign-in": "Sign in with Google",
+      "sign_out" : "Sign Out",
+      "delete" : "Delete"
     },
   };
 
