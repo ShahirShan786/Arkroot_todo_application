@@ -1,6 +1,7 @@
 import 'package:arkroot_todo_app/core/data/datasources/auth_remote_data_source.dart';
 import 'package:arkroot_todo_app/core/data/repositories/auth_repository_impl.dart';
 import 'package:arkroot_todo_app/core/domain/usecases/signin_usecase.dart';
+import 'package:arkroot_todo_app/core/domain/usecases/signin_with_google_usecases.dart';
 import 'package:arkroot_todo_app/core/domain/usecases/signup_usecases.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,11 +27,18 @@ final signInUseCaseProvider = Provider(
   }
 );
 
+final signInWithGoogleProvider = Provider(
+  (ref){
+    final repo = ref.read(authRepositoryProvider);
+    return SignInWithGoogleUsecases(repo);
+  }
+);
+
 // StateNotifier for Authentication
 class AuthNotifier extends StateNotifier<AsyncValue<User?>> {
   final SignInUseCase _signInUseCase;
-
-  AuthNotifier(this._signInUseCase) : super(const AsyncData(null));
+  final SignInWithGoogleUsecases _signInWithGoogleUsecases;
+  AuthNotifier(this._signInUseCase , this._signInWithGoogleUsecases) : super(const AsyncData(null));
 
   Future<void> signIn(String email, String password) async {
     print("Starting sign in for: $email");
@@ -47,6 +55,18 @@ class AuthNotifier extends StateNotifier<AsyncValue<User?>> {
       state = AsyncError(e, st);
     }
   }
+
+
+ Future<void> signInWithGoogle() async {
+  state = const AsyncLoading();
+  try {
+    await _signInWithGoogleUsecases.signInWithGoogelCall(); // ✅ call the method
+    state = AsyncData(FirebaseAuth.instance.currentUser);
+  } catch (e, st) {
+    state = AsyncError(e, st); // optional: catch stack trace as well
+    print("Google Sign-In error: $e");
+  }
+}
 
     Future<void> signOut() async {
     print("Starting sign out");
@@ -95,8 +115,9 @@ class SignUpNotifier extends StateNotifier<AsyncValue<void>> {
 final authNotifierProvider =
     StateNotifierProvider<AuthNotifier, AsyncValue<User?>>(
   (ref) {
-    final signInUseCase = ref.read(signInUseCaseProvider);
-    return AuthNotifier(signInUseCase);
+ final signInUseCase = ref.read(signInUseCaseProvider);
+    final signInWithGoogleUsecases = ref.read(signInWithGoogleProvider);
+    return AuthNotifier(signInUseCase, signInWithGoogleUsecases);
   },
 );
 

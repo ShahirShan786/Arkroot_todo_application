@@ -1,12 +1,61 @@
+import 'package:arkroot_todo_app/core/data/models/auth_user_model.dart';
 import 'package:arkroot_todo_app/core/domain/entities/auth_user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../models/auth_user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 class AuthRemoteDataSource {
   final FirebaseAuth _auth;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // CORRECTED: Access the singleton instance instead of creating a new one.
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+
   AuthRemoteDataSource(this._auth);
 
+  // Google Sign In
+  Future<AuthUserModel> signInWithGoogle() async {
+    try {
+      // Trigger the Google Sign-In flow
+      final googleUser = await _googleSignIn.signIn();
+      // Handle the case where the user cancels the sign-in flow
+      if (googleUser == null) {
+        throw Exception("Google Sign-In aborted by user");
+      }
+
+      // Obtain auth details
+      final googleAuth = await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      // Sign in with Firebase
+      final userCredential = await _auth.signInWithCredential(credential);
+      final user = userCredential.user!;
+
+      // Save to Firestore if new user
+      final userDoc = _firestore.collection("Users").doc(user.uid);
+      final docSnapshot = await userDoc.get();
+
+      if (!docSnapshot.exists) {
+        await userDoc.set({
+          "fullName": user.displayName,
+          "email": user.email,
+          "photoUrl": user.photoURL,
+          "createdAt": FieldValue.serverTimestamp(),
+        });
+      }
+
+      return AuthUserModel.fromFirebaseUser(user);
+    } catch (e) {
+      // Re-throw with a more specific error message for easier debugging
+      throw Exception("Google Sign-In failed: $e");
+    }
+  }
+
+  // Existing email/password sign-in (unchanged)
   Future<AuthUserModel> signInWithEmailAndPassword(
     String email,
     String password,
@@ -15,16 +64,14 @@ class AuthRemoteDataSource {
       email: email,
       password: password,
     );
-    final user = credential.user!;
-    return AuthUserModel.fromFirebaseUser(user);
+    return AuthUserModel.fromFirebaseUser(credential.user!);
   }
 
-  // SignUp
+  // Existing sign-up (unchanged)
   Future<AuthUser> signUpWithEmailAndPhone({
     required String fullName,
     required String email,
     required String password,
-   
   }) async {
     final userCredential = await _auth.createUserWithEmailAndPassword(
       email: email,
@@ -32,14 +79,20 @@ class AuthRemoteDataSource {
     );
 
     await _firestore.collection('Users').doc(userCredential.user!.uid).set({
-      'fullName' : fullName
+      'fullName': fullName,
     });
-    return AuthUser(uid: userCredential.user!.uid ,
-    email: userCredential.user!.email,
-    name: fullName
+
+    return AuthUser(
+      uid: userCredential.user!.uid,
+      email: userCredential.user!.email,
+      name: fullName,
     );
-    
   }
-  
-  Future<void> signOut() async => await _auth.signOut();
+
+  // Corrected sign out method
+  Future<void> signOut() async {
+    // It's best practice to sign out from Google first
+    await _googleSignIn.signOut();
+    await _auth.signOut();
+  }
 }

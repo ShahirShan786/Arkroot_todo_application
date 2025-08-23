@@ -64,14 +64,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     child: Text(
                       MessageGenerator.getMessage("login-title"),
                       textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                            color: Colors.white,
-                            fontSize: 45.sp,
-                          ),
+                      style: Theme.of(context).textTheme.headlineLarge
+                          ?.copyWith(color: Colors.white, fontSize: 45.sp),
                     ),
                   ),
                   SizedBox(height: 50.h),
-                  
+
                   // Email Field
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -82,17 +80,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       textInputAction: TextInputAction.next,
                       enabled: !isLoading,
                       decoration: InputDecoration(
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .labelSmall
+                        hintStyle: Theme.of(context).textTheme.labelSmall
                             ?.copyWith(color: appColors.disableBgColor),
                         hintText: MessageGenerator.getLabel('user@domain.com'),
                         label: Text(
                           MessageGenerator.getLabel('type in email'),
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall
-                              ?.copyWith(fontSize: 13.sp),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.labelSmall?.copyWith(fontSize: 13.sp),
                         ),
                         prefixIcon: const Icon(Icons.email_outlined),
                         filled: true,
@@ -116,9 +111,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       },
                     ),
                   ),
-                  
+
                   SizedBox(height: 8.h),
-                  
+
                   // Password Field
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -131,9 +126,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       enabled: !isLoading,
                       onFieldSubmitted: (_) => _handleSignIn(),
                       decoration: InputDecoration(
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .labelSmall
+                        hintStyle: Theme.of(context).textTheme.labelSmall
                             ?.copyWith(color: appColors.disableBgColor),
                         hintText: MessageGenerator.getLabel('user@123'),
                         label: Text(
@@ -161,14 +154,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
 
                   SizedBox(height: 20.h),
-                  
+
                   // Sign In Button
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: AnimatedClickableTextContainer(
-                      title: isLoading
-                          ? "Signing in..."
-                          : MessageGenerator.getLabel('Sign In'),
+                      title:
+                          isLoading
+                              ? "Signing in..."
+                              : MessageGenerator.getLabel('Sign In'),
                       iconSrc: '',
                       isActive: !isLoading,
                       bgColor: appColors.pleasantButtonBg,
@@ -176,9 +170,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       press: isLoading ? () {} : _handleSignIn,
                     ),
                   ),
-                  
+
                   SizedBox(height: 8.h),
-                  
+
                   // OR Divider
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -205,9 +199,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),
                     ],
                   ),
-                  
+
                   SizedBox(height: 8.h),
-                  
+
                   // Google Sign In Button
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -217,14 +211,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       isActive: !isLoading,
                       bgColor: appColors.pleasantButtonBg,
                       bgColorHover: appColors.pleasantButtonBgHover,
-                      press: isLoading ? () {} : () {
-                        // Implement Google Sign In
-                      },
+                      press:
+                          isLoading
+                              ? () {}
+                              : () {
+                                ref
+                                    .read(authNotifierProvider.notifier)
+                                    .signInWithGoogle();
+                              },
                     ),
                   ),
-                  
+
                   SizedBox(height: 10.h),
-                  
+
                   // Sign Up Link
                   RichText(
                     textAlign: TextAlign.center,
@@ -232,40 +231,40 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       style: Theme.of(context).textTheme.labelSmall,
                       children: <TextSpan>[
                         TextSpan(
-                          text: MessageGenerator.getLabel("Don't have an account? "),
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall
+                          text: MessageGenerator.getLabel(
+                            "Don't have an account? ",
+                          ),
+                          style: Theme.of(context).textTheme.labelSmall
                               ?.copyWith(color: Colors.grey[600]),
                         ),
                         TextSpan(
                           text: MessageGenerator.getLabel('Sign Up'),
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall
-                              ?.copyWith(color: Colors.white),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              if (!isLoading) {
-                                context.go("/signup");
-                              }
-                            },
+                          style: Theme.of(
+                            context,
+                          ).textTheme.labelSmall?.copyWith(color: Colors.white),
+                          recognizer:
+                              TapGestureRecognizer()
+                                ..onTap = () {
+                                  if (!isLoading) {
+                                    context.go("/signup");
+                                  }
+                                },
                         ),
                       ],
                     ),
                   ),
-                  
+
                   SizedBox(height: 10.h),
-                  
+
                   // Forgot Password Link
                   TextButton(
-                    onPressed: isLoading ? null : () => context.go("/forgotPassword"),
+                    onPressed:
+                        isLoading ? null : () => context.go("/forgotPassword"),
                     child: Text(
                       MessageGenerator.getLabel('Forgot Password?'),
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelSmall
-                          ?.copyWith(color: Colors.blue),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.labelSmall?.copyWith(color: Colors.blue),
                     ),
                   ),
                 ],
@@ -281,7 +280,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       final email = _emailController.text.trim();
       final password = _passwordController.text.trim();
-      
+
       ref.read(authNotifierProvider.notifier).signIn(email, password);
     }
   }

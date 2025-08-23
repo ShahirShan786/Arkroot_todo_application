@@ -10,4 +10,6 @@ class SignupUsecases {
   Future<AuthUser> call(String name , String email , String password){
     return _repository.signUpWithEmailAndPassword(name, email, password);
   }
+
+  
 }
