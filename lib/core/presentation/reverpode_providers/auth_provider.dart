@@ -38,12 +38,27 @@ final signInWithGoogleProvider = Provider(
 class AuthNotifier extends StateNotifier<AsyncValue<User?>> {
   final SignInUseCase _signInUseCase;
   final SignInWithGoogleUsecases _signInWithGoogleUsecases;
-  AuthNotifier(this._signInUseCase , this._signInWithGoogleUsecases) : super(const AsyncData(null));
+  AuthNotifier(this._signInUseCase , this._signInWithGoogleUsecases) : super(const AsyncLoading()){
+    _initializeAuthState();
+  }
+  
+   void _initializeAuthState() {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    state = AsyncData(currentUser);
+    
+    // Listen to auth state changes
+    FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (state is! AsyncLoading) {
+        state = AsyncData(user);
+      }
+    });
+  }
+
 
   Future<void> signIn(String email, String password) async {
     print("Starting sign in for: $email");
     state = const AsyncLoading();
-
+     
     try {
       final result = await _signInUseCase(email, password);
       print("Sign in successful: $result");
