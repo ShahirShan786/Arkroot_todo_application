@@ -256,17 +256,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                   SizedBox(height: 10.h),
 
-                  // Forgot Password Link
-                  TextButton(
-                    onPressed:
-                        isLoading ? null : () => context.go("/forgotPassword"),
-                    child: Text(
-                      MessageGenerator.getLabel('Forgot Password?'),
-                      style: Theme.of(
-                        context,
-                      ).textTheme.labelSmall?.copyWith(color: Colors.blue),
-                    ),
-                  ),
+                
                 ],
               ),
             ),
@@ -277,6 +267,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _handleSignIn() {
+ 
     if (_formKey.currentState!.validate()) {
       final email = _emailController.text.trim();
       final password = _passwordController.text.trim();

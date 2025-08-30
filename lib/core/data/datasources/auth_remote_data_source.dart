@@ -2,6 +2,7 @@ import 'package:arkroot_todo_app/core/data/models/auth_user_model.dart';
 import 'package:arkroot_todo_app/core/domain/entities/auth_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRemoteDataSource {
@@ -54,6 +55,66 @@ class AuthRemoteDataSource {
       throw Exception("Google Sign-In failed: $e");
     }
   }
+
+//   Future<AuthUserModel> signInWithGoogle() async {
+//   try {
+//     if (kIsWeb) {
+//       // 🔹 Use Firebase Web Sign-In
+//       final GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+//       final userCredential = await _auth.signInWithPopup(googleProvider);
+//       final user = userCredential.user!;
+
+//       // Save to Firestore if new user
+//       final userDoc = _firestore.collection("Users").doc(user.uid);
+//       final docSnapshot = await userDoc.get();
+
+//       if (!docSnapshot.exists) {
+//         await userDoc.set({
+//           "fullName": user.displayName,
+//           "email": user.email,
+//           "photoUrl": user.photoURL,
+//           "createdAt": FieldValue.serverTimestamp(),
+//         });
+//       }
+
+//       return AuthUserModel.fromFirebaseUser(user);
+//     } else {
+//       // 🔹 Mobile (Android/iOS) Flow
+//       final googleUser = await _googleSignIn.signIn();
+//       if (googleUser == null) {
+//         throw Exception("Google Sign-In aborted by user");
+//       }
+
+//       final googleAuth = await googleUser.authentication;
+
+//       final credential = GoogleAuthProvider.credential(
+//         accessToken: googleAuth.accessToken,
+//         idToken: googleAuth.idToken,
+//       );
+
+//       final userCredential = await _auth.signInWithCredential(credential);
+//       final user = userCredential.user!;
+
+//       final userDoc = _firestore.collection("Users").doc(user.uid);
+//       final docSnapshot = await userDoc.get();
+
+//       if (!docSnapshot.exists) {
+//         await userDoc.set({
+//           "fullName": user.displayName,
+//           "email": user.email,
+//           "photoUrl": user.photoURL,
+//           "createdAt": FieldValue.serverTimestamp(),
+//         });
+//       }
+
+//       return AuthUserModel.fromFirebaseUser(user);
+//     }
+//   } catch (e) {
+//     throw Exception("Google Sign-In failed: $e");
+//   }
+// }
+
 
   // Existing email/password sign-in (unchanged)
   Future<AuthUserModel> signInWithEmailAndPassword(

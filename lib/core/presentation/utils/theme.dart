@@ -133,6 +133,7 @@ ThemeData getDarkTheme() {
 abstract class AppColors {
   final Color screenBg;
   final Color appBarBg;
+  final Color appBarcolor;
   final Color progressCircleBg;
   final Color pleasantButtonBg;
   final Color pleasantButtonBgHover;
@@ -170,6 +171,7 @@ abstract class AppColors {
   AppColors({
     required this.screenBg,
     required this.appBarBg,
+    required this.appBarcolor,
     required this.progressCircleBg,
     required this.pleasantButtonBg,
     required this.negativeButtonBg,
@@ -209,6 +211,7 @@ class AppColorsLight extends AppColors {
     : super(
         screenBg: const Color(0xFFFFFFFF), // White background for light
         appBarBg: const Color(0xFFFFFFFF),
+        appBarcolor: const Color(0xFF1A1A1A),
         progressCircleBg: const Color(0xFF1E6F9F), // Primary
         pleasantButtonBg: const Color(0xFF1E6F9F), // Primary
         pleasantButtonBgHover: const Color(
@@ -266,6 +269,7 @@ class AppColorsDark extends AppColors {
     : super(
         screenBg: const Color(0xFF1A1A1A), // Surface
         appBarBg: const Color(0xFF1A1A1A),
+        appBarcolor: const Color(0xFF1A1A1A),
         progressCircleBg: const Color(0xFF1E6F9F), // Primary
         pleasantButtonBg: const Color(0xFF1E6F9F), // Primary
         pleasantButtonBgHover: const Color(0xFF155470), // Darker shade
@@ -315,123 +319,3 @@ class AppColorsDark extends AppColors {
         tileTextColorHover: Colors.white70,
       );
 }
-
-// class AppColorsLight extends AppColors {
-//   AppColorsLight()
-//       : super(
-//           screenBg: Colors.white,
-//           appBarBg: const Color.fromRGBO(255, 255, 255, 1),
-//           progressCircleBg: Colors.black,
-//           pleasantButtonBg: const Color.fromRGBO(36, 107, 253, 1),
-//           pleasantButtonBgHover: const Color.fromRGBO(2, 67, 199, 1.0),
-//           negativeButtonBg: const Color.fromARGB(255, 248, 53, 95),
-//           negativeButtonBgHover: const Color.fromARGB(255, 255, 42, 42),
-//           buttonTextColor: const Color.fromRGBO(255, 255, 255, 1),
-//           buttonTextColorHover: const Color.fromRGBO(200, 200, 200, 1),
-//           textColor: Colors.black87,
-//           textInputEnabledBorder: OutlineInputBorder(
-//             borderRadius: const BorderRadius.all(Radius.circular(30)),
-//             borderSide: BorderSide(
-//               color: Colors.grey[200] ?? Colors.grey,
-//             ),
-//           ),
-//           textInputFocusedBorder: OutlineInputBorder(
-//             borderRadius: const BorderRadius.all(Radius.circular(30)),
-//             borderSide: BorderSide(
-//               color: Colors.grey[300] ?? Colors.grey,
-//             ),
-//           ),
-//           textInputFillColor: Colors.grey[100] ?? Colors.grey,
-//           textInputStyle: const TextStyle(color: Colors.black87),
-//           textInputLabelStyle: const TextStyle(color: Colors.black87),
-//           pleasantButtonTextStyle: const TextStyle(color: Colors.white),
-//           appBarTextStyle: GoogleFonts.righteous(
-//               textStyle: const TextStyle(color: Colors.black)),
-//           listDividerColor: Colors.grey[400] ?? Colors.grey,
-//           appBarIconTheme: const IconThemeData(
-//             color: Colors.black,
-//           ),
-//           appBarElevation: 8,
-//           primaryColor: const Color.fromRGBO(36, 107, 253, 1),
-//           disableBgColor: Colors.black54,
-//           sideMenuHighlight: Colors.black,
-//           sideMenuNormal: Colors.white38,
-//           sideMenuDisable: Colors.white24,
-//           sideMenuBg: const Color.fromARGB(255, 12, 16, 36),
-//           inputBgFill: const Color.fromRGBO(230, 230, 230, 1),
-//           rainbowColors: [
-//             Colors.red,
-//             Colors.orange,
-//             Colors.yellow,
-//             Colors.green,
-//             Colors.blue,
-//             Colors.indigo,
-//             Colors.purple,
-//           ],
-//           linkTextColor: Colors.red,
-//           tileBgColor: Colors.white,
-//           tileBgColorHover: const Color.fromRGBO(2, 67, 199, 1.0),
-//           tileTextColor: Colors.black87,
-//           tileTextColorHover: Colors.white,
-//         );
-// }
-
-// class AppColorsDark extends AppColors {
-//   AppColorsDark()
-//       : super(
-//           screenBg: Colors.black,
-//           appBarBg: Colors.black,
-//           progressCircleBg: Colors.white,
-//           pleasantButtonBg: const Color.fromRGBO(36, 107, 253, 1),
-//           pleasantButtonBgHover: const Color.fromRGBO(2, 67, 199, 1.0),
-//           negativeButtonBg: const Color.fromARGB(255, 248, 53, 95),
-//           negativeButtonBgHover: const Color.fromARGB(255, 255, 42, 42),
-//           buttonTextColor: const Color.fromRGBO(255, 255, 255, 1),
-//           buttonTextColorHover: const Color.fromRGBO(200, 200, 200, 1),
-//           textColor: Colors.white70,
-//           textInputEnabledBorder: OutlineInputBorder(
-//             borderRadius: const BorderRadius.all(Radius.circular(30)),
-//             borderSide: BorderSide(
-//               color: Colors.grey[200] ?? Colors.grey,
-//             ),
-//           ),
-//           textInputFocusedBorder: OutlineInputBorder(
-//             borderRadius: const BorderRadius.all(Radius.circular(30)),
-//             borderSide: BorderSide(
-//               color: Colors.grey[300] ?? Colors.grey,
-//             ),
-//           ),
-//           textInputFillColor: Colors.grey[800] ?? Colors.grey,
-//           textInputStyle: const TextStyle(color: Colors.white70),
-//           textInputLabelStyle: const TextStyle(color: Colors.white70),
-//           pleasantButtonTextStyle: const TextStyle(color: Colors.white),
-//           appBarTextStyle: GoogleFonts.righteous(
-//               textStyle: const TextStyle(color: Colors.white)),
-//           listDividerColor: Colors.grey[200] ?? Colors.grey,
-//           appBarIconTheme: const IconThemeData(
-//             color: Colors.white,
-//           ),
-//           appBarElevation: 8,
-//           primaryColor: const Color.fromRGBO(36, 107, 253, 1),
-//           disableBgColor: Colors.white54,
-//           sideMenuHighlight: Colors.white,
-//           sideMenuNormal: Colors.white38,
-//           sideMenuDisable: Colors.white24,
-//           sideMenuBg: const Color.fromARGB(255, 12, 16, 36),
-//           inputBgFill: const Color.fromARGB(255, 31, 30, 30),
-//           rainbowColors: [
-//             Colors.red,
-//             Colors.orange,
-//             Colors.yellow,
-//             Colors.green,
-//             Colors.blue,
-//             Colors.indigo,
-//             Colors.purple,
-//           ],
-//           linkTextColor: Colors.red,
-//           tileBgColor: Colors.black,
-//           tileBgColorHover: const Color.fromRGBO(2, 67, 199, 1.0),
-//           tileTextColor: Colors.white,
-//           tileTextColorHover: Colors.white70,
-//         );
-// }

@@ -1,4 +1,4 @@
-import 'package:arkroot_todo_app/core/presentation/pages/home_screen.dart';
+import 'package:arkroot_todo_app/core/presentation/pages/home/home_screen.dart';
 import 'package:arkroot_todo_app/core/presentation/pages/login_screen.dart';
 import 'package:arkroot_todo_app/core/presentation/pages/signup_screen.dart';
 import 'package:arkroot_todo_app/core/presentation/pages/splash_screen.dart';
