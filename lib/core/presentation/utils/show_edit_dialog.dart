@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Future<void> showEditDialog(
     BuildContext context,
-    String currentTask,
-    Function(String) onSave,
+    String title,
+    String description,
+    Function(String updatedTitle , String updatedDescription) onSave,
   ) async {
-    final TextEditingController editController = TextEditingController(
-      text: currentTask,
+    final TextEditingController editTitleController = TextEditingController(
+      text: title,
+    );
+
+    final TextEditingController editDescriptionController = TextEditingController(
+      text: description
     );
 
     return showDialog(
@@ -35,11 +41,32 @@ Future<void> showEditDialog(
                 // Input Field
                 TextField(
                   maxLines: 2,
-                  controller: editController,
+                  controller: editTitleController,
                   style: const TextStyle(color: Colors.white),
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
-                    hintText: "Update your task...",
+                    hintText: "Update your title...",
+                    hintStyle: TextStyle(color: Colors.grey[500]),
+                    filled: true,
+                    fillColor: const Color(0xFF2E2E2E),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                  ),
+                ),
+                 SizedBox(height: 10.h),
+                 TextField(
+                  maxLines: 2,
+                  controller: editDescriptionController,
+                  style: const TextStyle(color: Colors.white),
+                  cursorColor: Colors.white,
+                  decoration: InputDecoration(
+                    hintText: "Update your description...",
                     hintStyle: TextStyle(color: Colors.grey[500]),
                     filled: true,
                     fillColor: const Color(0xFF2E2E2E),
@@ -69,9 +96,11 @@ Future<void> showEditDialog(
                     const SizedBox(width: 8),
                     ElevatedButton(
                       onPressed: () {
-                        String updatedTask = editController.text.trim();
-                        if (updatedTask.isNotEmpty) {
-                          onSave(updatedTask); // callback to update task
+                        String updatedTitle = editTitleController.text.trim();
+                        String updatedDescription = editDescriptionController.text.trim();
+
+                        if (updatedTitle.isNotEmpty && updatedDescription.isNotEmpty) {
+                          onSave(updatedTitle , updatedDescription); // callback to update task
                         }
                         Navigator.of(context).pop();
                       },

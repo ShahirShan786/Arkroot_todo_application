@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:arkroot_todo_app/core/presentation/utils/theme.dart';
+import 'package:Arkroot/core/presentation/utils/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AnimatedClickableTextContainer extends StatefulWidget {
@@ -64,10 +64,7 @@ class _AnimatedClickableTextContainerState
           onTapCancel: () => setState(() => isHover = false),
           onTap: widget.press,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 14,
-              horizontal: 12,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
             child: getMenuItem(),
           ),
         ),

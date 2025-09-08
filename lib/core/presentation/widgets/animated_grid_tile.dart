@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:arkroot_todo_app/core/presentation/utils/theme.dart';
+import 'package:Arkroot/core/presentation/utils/theme.dart';
 
 class AnimatedClickableTile extends StatefulWidget {
   final bool isActive;

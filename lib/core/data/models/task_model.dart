@@ -2,14 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TaskModel {
   final String id;
-  final String content;
+  final String title;
+  final String description;
   final bool isCompleted;
   final DateTime createdAt;
   final DateTime updatedAt;
 
   TaskModel({
     required this.id,
-    required this.content,
+    required this.title,
+    required this.description,
     required this.isCompleted,
     required this.createdAt,
     required this.updatedAt,
@@ -21,7 +23,8 @@ class TaskModel {
       final data = doc.data();
       return TaskModel(
         id: doc.id,
-        content: data['content'] ?? '',
+        title: data['title'] ?? '',
+        description: data['description'] ?? '',
         isCompleted: data['isCompleted'] ?? false,
         createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
         updatedAt: (data['updatedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
@@ -38,7 +41,8 @@ class TaskModel {
     final data = doc.data() ?? {};
     return TaskModel(
       id: doc.id,
-      content: data['content'] ?? '',
+      title: data['title'] ?? '',
+      description: data['description'] ?? '',
       isCompleted: data['isCompleted'] ?? false,
       createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
       updatedAt: (data['updatedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
@@ -47,7 +51,8 @@ class TaskModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'content': content,
+      'title': title,
+      'description' : description,
       'isCompleted': isCompleted,
       'createdAt': createdAt,
       'updatedAt': updatedAt,

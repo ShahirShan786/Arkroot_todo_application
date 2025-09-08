@@ -1,12 +1,12 @@
-import 'package:arkroot_todo_app/core/data/models/task_model.dart';
-import 'package:arkroot_todo_app/core/presentation/pages/home/widgets/build_search_result_info.dart';
-import 'package:arkroot_todo_app/core/presentation/pages/home/widgets/build_task_counter_section.dart';
-import 'package:arkroot_todo_app/core/presentation/reverpode_providers/auth_provider.dart';
-import 'package:arkroot_todo_app/core/presentation/reverpode_providers/task_service_provider.dart';
-import 'package:arkroot_todo_app/core/presentation/utils/message_generator.dart';
-import 'package:arkroot_todo_app/core/presentation/utils/show_delete_confirmation_dialogues.dart';
-import 'package:arkroot_todo_app/core/presentation/utils/show_edit_dialog.dart';
-import 'package:arkroot_todo_app/core/presentation/utils/theme.dart';
+import 'package:Arkroot/core/data/models/task_model.dart';
+import 'package:Arkroot/core/presentation/pages/home/widgets/build_search_result_info.dart';
+import 'package:Arkroot/core/presentation/pages/home/widgets/build_task_counter_section.dart';
+import 'package:Arkroot/core/presentation/reverpode_providers/auth_provider.dart';
+import 'package:Arkroot/core/presentation/reverpode_providers/task_service_provider.dart';
+import 'package:Arkroot/core/presentation/utils/message_generator.dart';
+import 'package:Arkroot/core/presentation/utils/show_delete_confirmation_dialogues.dart';
+import 'package:Arkroot/core/presentation/utils/show_edit_dialog.dart';
+import 'package:Arkroot/core/presentation/utils/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -252,11 +252,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget _buildTaskItem(TaskModel task, String searchQuery) {
     return Card(
       color: const Color(0xFF333333),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
+      child: ExpansionTile(
+        tilePadding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
+        shape: const RoundedRectangleBorder(
+          side: BorderSide(color: Colors.transparent),
+        ),
         title: RichText(
-          text: _buildHighlightedText(
-            task.content,
+          text: _buildHighlightedTitle(
+            task.title,
             searchQuery,
             task.isCompleted,
           ),
@@ -265,6 +268,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           value: task.isCompleted,
           onChanged: (_) => _toggleTask(task),
         ),
+
         trailing: SizedBox(
           width: 96,
           child: Row(
@@ -272,6 +276,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             children: [_buildEditButton(task), _buildDeleteButton(task)],
           ),
         ),
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: Colors.white.withOpacity(0.05),
+                width: 1,
+              ),
+            ),
+            child: 
+             Text(
+              task.description,
+              style: TextStyle(
+                  color: task.isCompleted ? Colors.grey[500] : Colors.white,
+                   decoration:
+              task.isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
+          decorationColor: Colors.grey[800],
+          decorationThickness: 3,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -380,14 +409,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  TextSpan _buildHighlightedText(
-    String text,
+  TextSpan _buildHighlightedTitle(
+    String title,
     String searchQuery,
     bool isCompleted,
   ) {
     if (searchQuery.isEmpty) {
       return TextSpan(
-        text: text,
+        text: title,
+        style: TextStyle(
+          color: isCompleted ? Colors.grey[500] : Colors.white,
+          decoration:
+              isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
+          decorationColor: Colors.grey[800],
+          decorationThickness: 3,
+        ),
+      );
+    }
+
+    TextSpan buildHighlightedDescription(
+      String description,
+      bool isCompleted,
+    ){
+      return TextSpan(
+        text: description,
         style: TextStyle(
           color: isCompleted ? Colors.grey[500] : Colors.white,
           decoration:
@@ -399,28 +444,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
 
     final List<TextSpan> spans = [];
-    final String lowerText = text.toLowerCase();
+    final String lowerText = title.toLowerCase();
     final String lowerQuery = searchQuery.toLowerCase();
     int start = 0;
 
     while (true) {
       final int index = lowerText.indexOf(lowerQuery, start);
       if (index == -1) {
-        if (start < text.length) {
-          spans.add(_createTextSpan(text.substring(start), isCompleted, false));
+        if (start < title.length) {
+          spans.add(_createTextSpan(title.substring(start), isCompleted, false));
         }
         break;
       }
 
       if (index > start) {
         spans.add(
-          _createTextSpan(text.substring(start, index), isCompleted, false),
+          _createTextSpan(title.substring(start, index), isCompleted, false),
         );
       }
 
       spans.add(
         _createTextSpan(
-          text.substring(index, index + searchQuery.length),
+          title.substring(index, index + searchQuery.length),
           isCompleted,
           true,
         ),
@@ -507,7 +552,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void _showAddBottomSheet(BuildContext context) {
-    final TextEditingController taskController = TextEditingController();
+    // final TextEditingController taskController = TextEditingController();
+    final TextEditingController titleController = TextEditingController();
+    final TextEditingController descriptionController = TextEditingController();
 
     showModalBottomSheet(
       context: context,
@@ -537,9 +584,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-              _buildTaskInputField(taskController),
+              _buildTaskInputField(titleController, descriptionController),
               const SizedBox(height: 20),
-              _buildBottomSheetButtons(context, taskController),
+              _buildBottomSheetButtons(
+                context,
+                titleController,
+                descriptionController,
+              ),
             ],
           ),
         );
@@ -547,31 +598,59 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildTaskInputField(TextEditingController controller) {
-    return TextField(
-      controller: controller,
-      style: const TextStyle(color: Colors.white),
-      cursorColor: Colors.white,
-      decoration: InputDecoration(
-        hintText: "Enter your task...",
-        hintStyle: TextStyle(color: Colors.grey[500]),
-        filled: true,
-        fillColor: const Color(0xFF2E2E2E),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
+  Widget _buildTaskInputField(
+    TextEditingController titleController,
+    TextEditingController descriptionController,
+  ) {
+    return Column(
+      spacing: 10.h,
+      children: [
+        TextField(
+          controller: titleController,
+          style: const TextStyle(color: Colors.white),
+          cursorColor: Colors.white,
+          decoration: InputDecoration(
+            hintText: "Title",
+            hintStyle: TextStyle(color: Colors.grey[500]),
+            filled: true,
+            fillColor: const Color(0xFF2E2E2E),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.white),
+            ),
+          ),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.white),
+        TextField(
+          controller: descriptionController,
+          style: const TextStyle(color: Colors.white),
+          cursorColor: Colors.white,
+          decoration: InputDecoration(
+            hintText: "Description",
+            hintStyle: TextStyle(color: Colors.grey[500]),
+            filled: true,
+            fillColor: const Color(0xFF2E2E2E),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.white),
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 
   Widget _buildBottomSheetButtons(
     BuildContext context,
-    TextEditingController controller,
+    TextEditingController titleController,
+    TextEditingController descriptionController,
   ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -582,7 +661,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         const SizedBox(width: 8),
         ElevatedButton(
-          onPressed: () => _addTask(context, controller),
+          onPressed:
+              () => _addTask(context, titleController, descriptionController),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blueAccent,
             shape: RoundedRectangleBorder(
@@ -597,10 +677,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Future<void> _addTask(
     BuildContext context,
-    TextEditingController controller,
+    TextEditingController titleController,
+    TextEditingController descriptionController,
   ) async {
-    final String newTask = controller.text.trim();
-    if (newTask.isEmpty) {
+    final String title = titleController.text.trim();
+    final String description = descriptionController.text.trim();
+    if (title.isEmpty && description.isEmpty) {
       Navigator.of(context).pop();
       return;
     }
@@ -618,7 +700,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
 
     try {
-      await taskService.addTask(newTask);
+      await taskService.addTask(title, description);
       Navigator.of(context).pop();
     } catch (e) {
       Navigator.of(context).pop();
@@ -648,12 +730,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void _editTask(TaskModel task) {
-    showEditDialog(context, task.content, (updatedTask) async {
+    showEditDialog(context, task.title, task.description, (
+      updatedTitle,
+      updatedDescription,
+    ) async {
       final taskService = ref.read(taskServiceProvider);
       if (taskService == null) return;
 
       try {
-        await taskService.editTask(task.id, updatedTask);
+        await taskService.editTask(
+          task.id, // ✅ taskId
+          updatedTitle,
+          updatedDescription,
+        );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -694,12 +783,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
 
 
-//   import 'package:arkroot_todo_app/core/presentation/reverpode_providers/auth_provider.dart';
-//   import 'package:arkroot_todo_app/core/presentation/reverpode_providers/task_service_provider.dart';
-//   import 'package:arkroot_todo_app/core/presentation/utils/message_generator.dart';
-// import 'package:arkroot_todo_app/core/presentation/utils/show_delete_confirmation_dialogues.dart';
-// import 'package:arkroot_todo_app/core/presentation/utils/show_edit_dialog.dart';
-//   import 'package:arkroot_todo_app/core/presentation/utils/theme.dart';
+//   import 'package:Arkroot/core/presentation/reverpode_providers/auth_provider.dart';
+//   import 'package:Arkroot/core/presentation/reverpode_providers/task_service_provider.dart';
+//   import 'package:Arkroot/core/presentation/utils/message_generator.dart';
+// import 'package:Arkroot/core/presentation/utils/show_delete_confirmation_dialogues.dart';
+// import 'package:Arkroot/core/presentation/utils/show_edit_dialog.dart';
+//   import 'package:Arkroot/core/presentation/utils/theme.dart';
 //   import 'package:flutter/material.dart';
 //   import 'package:flutter_riverpod/flutter_riverpod.dart';
 //   import 'package:flutter_screenutil/flutter_screenutil.dart';

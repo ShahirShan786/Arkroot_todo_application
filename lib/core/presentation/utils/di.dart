@@ -1,7 +1,7 @@
-// import 'package:arkroot_todo_app/core/data/datasources/remote_data_source.dart';
-// import 'package:arkroot_todo_app/core/data/repositories/user_repository_impl.dart';
-// import 'package:arkroot_todo_app/core/domain/repositories/user_repository.dart';
-// import 'package:arkroot_todo_app/core/domain/usecases/authentication.dart';
+// import 'package:Arkroot/core/data/datasources/remote_data_source.dart';
+// import 'package:Arkroot/core/data/repositories/user_repository_impl.dart';
+// import 'package:Arkroot/core/domain/repositories/user_repository.dart';
+// import 'package:Arkroot/core/domain/usecases/authentication.dart';
 // import 'package:get_it/get_it.dart';
 
 // void setupDependencies() {

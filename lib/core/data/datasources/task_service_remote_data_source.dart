@@ -1,4 +1,4 @@
-import 'package:arkroot_todo_app/core/data/models/task_model.dart';
+import 'package:Arkroot/core/data/models/task_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -8,94 +8,78 @@ class TaskServiceRemoteDataSource {
 
   TaskServiceRemoteDataSource(this._firestore, this._auth);
 
-
   CollectionReference<Map<String, dynamic>> get _taskCollection {
     final userId = _auth.currentUser!.uid;
-   
+
     return _firestore.collection("Users").doc(userId).collection("tasks");
   }
 
- 
-  Future<void> addTask(String content) async {
- 
+  Future<void> addTask(String title, String description) async {
     final now = DateTime.now();
     try {
       await _taskCollection.add({
-        'content': content,
+        'title': title,
+        'description': description,
         "isCompleted": false,
         "createdAt": now,
         "updatedAt": now,
       });
-
     } catch (e) {
-   
       rethrow;
     }
   }
 
   // Stream all tasks with debug logging
   Stream<List<TaskModel>> streamTasks() {
-    
     return _taskCollection
         .orderBy("createdAt", descending: true)
         .snapshots()
         .map((snapshot) {
-         
-          
           final tasks = <TaskModel>[];
           for (final doc in snapshot.docs) {
             try {
-              
               final task = TaskModel.fromDocumentSnapshot(doc);
               tasks.add(task);
             } catch (e) {
               // Debug log
             }
           }
-          
-   
+
           return tasks;
         });
   }
 
-  // Toggle task completion 
+  // Toggle task completion
   Future<void> toggleTask(String taskId, bool currentStatus) async {
-   
     try {
       await _taskCollection.doc(taskId).update({
         "isCompleted": !currentStatus,
-        "updatedAt": DateTime.now()
+        "updatedAt": DateTime.now(),
       });
-     
     } catch (e) {
       // Debug log
       rethrow;
     }
   }
 
-  // Edit task 
-  Future<void> editTask(String taskId, String newContent) async {
-   
+  // Edit task
+  Future<void> editTask(String taskId, String newTitle , String newDescription) async {
     try {
       await _taskCollection.doc(taskId).update({
-        "content": newContent,
-        "updatedAt": DateTime.now()
+        "title": newTitle,
+        "description" : newDescription,
+        "updatedAt": DateTime.now(),
       });
-      
     } catch (e) {
-    
       rethrow;
     }
   }
 
   // Delete task
   Future<void> deleteTask(String taskId) async {
- 
     try {
       await _taskCollection.doc(taskId).delete();
-    
     } catch (e) {
-    
       rethrow;
     }
   }

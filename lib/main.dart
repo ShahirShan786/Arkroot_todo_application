@@ -1,10 +1,10 @@
-import 'package:arkroot_todo_app/core/presentation/pages/login_screen.dart';
+import 'package:Arkroot/core/presentation/pages/login_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:arkroot_todo_app/core/presentation/navigation/app_router.dart';
-import 'package:arkroot_todo_app/core/presentation/utils/theme.dart';
+import 'package:Arkroot/core/presentation/navigation/app_router.dart';
+import 'package:Arkroot/core/presentation/utils/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -15,7 +15,7 @@ Future<void> main() async {
   // setupDependencies();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp( ProviderScope(child: MyApp()));
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

@@ -2,10 +2,10 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:arkroot_todo_app/core/presentation/utils/constants.dart';
-import 'package:arkroot_todo_app/core/presentation/utils/message_generator.dart';
-import 'package:arkroot_todo_app/core/presentation/utils/theme.dart';
-import 'package:arkroot_todo_app/core/presentation/widgets/animated_container.dart';
+import 'package:Arkroot/core/presentation/utils/constants.dart';
+import 'package:Arkroot/core/presentation/utils/message_generator.dart';
+import 'package:Arkroot/core/presentation/utils/theme.dart';
+import 'package:Arkroot/core/presentation/widgets/animated_container.dart';
 
 import 'package:go_router/go_router.dart';
 

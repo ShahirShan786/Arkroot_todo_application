@@ -1,7 +1,7 @@
-import 'package:arkroot_todo_app/core/presentation/reverpode_providers/auth_provider.dart';
-import 'package:arkroot_todo_app/core/presentation/utils/message_generator.dart';
-import 'package:arkroot_todo_app/core/presentation/utils/theme.dart';
-import 'package:arkroot_todo_app/core/presentation/widgets/animated_container.dart';
+import 'package:Arkroot/core/presentation/reverpode_providers/auth_provider.dart';
+import 'package:Arkroot/core/presentation/utils/message_generator.dart';
+import 'package:Arkroot/core/presentation/utils/theme.dart';
+import 'package:Arkroot/core/presentation/widgets/animated_container.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,7 +40,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ),
         );
       } else if (next is AsyncData && next.value != null) {
-        // User is successfully signed in, navigate to home
+        
         WidgetsBinding.instance.addPostFrameCallback((_) {
           context.go("/home");
         });
@@ -255,8 +255,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
 
                   SizedBox(height: 10.h),
-
-                
                 ],
               ),
             ),
@@ -267,7 +265,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _handleSignIn() {
- 
     if (_formKey.currentState!.validate()) {
       final email = _emailController.text.trim();
       final password = _passwordController.text.trim();

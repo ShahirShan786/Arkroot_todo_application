@@ -1,4 +1,4 @@
-import 'package:arkroot_todo_app/core/domain/entities/auth_user.dart';
+import 'package:Arkroot/core/domain/entities/auth_user.dart';
 
 class AuthUserModel extends AuthUser {
   const AuthUserModel({required super.uid, required super.email});

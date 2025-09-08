@@ -1,5 +1,5 @@
-import 'package:arkroot_todo_app/core/data/models/auth_user_model.dart';
-import 'package:arkroot_todo_app/core/domain/entities/auth_user.dart';
+import 'package:Arkroot/core/data/models/auth_user_model.dart';
+import 'package:Arkroot/core/domain/entities/auth_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -10,7 +10,6 @@ class AuthRemoteDataSource {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   // CORRECTED: Access the singleton instance instead of creating a new one.
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-
 
   AuthRemoteDataSource(this._auth);
 
@@ -56,65 +55,64 @@ class AuthRemoteDataSource {
     }
   }
 
-//   Future<AuthUserModel> signInWithGoogle() async {
-//   try {
-//     if (kIsWeb) {
-//       // 🔹 Use Firebase Web Sign-In
-//       final GoogleAuthProvider googleProvider = GoogleAuthProvider();
+  //   Future<AuthUserModel> signInWithGoogle() async {
+  //   try {
+  //     if (kIsWeb) {
+  //       // 🔹 Use Firebase Web Sign-In
+  //       final GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
-//       final userCredential = await _auth.signInWithPopup(googleProvider);
-//       final user = userCredential.user!;
+  //       final userCredential = await _auth.signInWithPopup(googleProvider);
+  //       final user = userCredential.user!;
 
-//       // Save to Firestore if new user
-//       final userDoc = _firestore.collection("Users").doc(user.uid);
-//       final docSnapshot = await userDoc.get();
+  //       // Save to Firestore if new user
+  //       final userDoc = _firestore.collection("Users").doc(user.uid);
+  //       final docSnapshot = await userDoc.get();
 
-//       if (!docSnapshot.exists) {
-//         await userDoc.set({
-//           "fullName": user.displayName,
-//           "email": user.email,
-//           "photoUrl": user.photoURL,
-//           "createdAt": FieldValue.serverTimestamp(),
-//         });
-//       }
+  //       if (!docSnapshot.exists) {
+  //         await userDoc.set({
+  //           "fullName": user.displayName,
+  //           "email": user.email,
+  //           "photoUrl": user.photoURL,
+  //           "createdAt": FieldValue.serverTimestamp(),
+  //         });
+  //       }
 
-//       return AuthUserModel.fromFirebaseUser(user);
-//     } else {
-//       // 🔹 Mobile (Android/iOS) Flow
-//       final googleUser = await _googleSignIn.signIn();
-//       if (googleUser == null) {
-//         throw Exception("Google Sign-In aborted by user");
-//       }
+  //       return AuthUserModel.fromFirebaseUser(user);
+  //     } else {
+  //       // 🔹 Mobile (Android/iOS) Flow
+  //       final googleUser = await _googleSignIn.signIn();
+  //       if (googleUser == null) {
+  //         throw Exception("Google Sign-In aborted by user");
+  //       }
 
-//       final googleAuth = await googleUser.authentication;
+  //       final googleAuth = await googleUser.authentication;
 
-//       final credential = GoogleAuthProvider.credential(
-//         accessToken: googleAuth.accessToken,
-//         idToken: googleAuth.idToken,
-//       );
+  //       final credential = GoogleAuthProvider.credential(
+  //         accessToken: googleAuth.accessToken,
+  //         idToken: googleAuth.idToken,
+  //       );
 
-//       final userCredential = await _auth.signInWithCredential(credential);
-//       final user = userCredential.user!;
+  //       final userCredential = await _auth.signInWithCredential(credential);
+  //       final user = userCredential.user!;
 
-//       final userDoc = _firestore.collection("Users").doc(user.uid);
-//       final docSnapshot = await userDoc.get();
+  //       final userDoc = _firestore.collection("Users").doc(user.uid);
+  //       final docSnapshot = await userDoc.get();
 
-//       if (!docSnapshot.exists) {
-//         await userDoc.set({
-//           "fullName": user.displayName,
-//           "email": user.email,
-//           "photoUrl": user.photoURL,
-//           "createdAt": FieldValue.serverTimestamp(),
-//         });
-//       }
+  //       if (!docSnapshot.exists) {
+  //         await userDoc.set({
+  //           "fullName": user.displayName,
+  //           "email": user.email,
+  //           "photoUrl": user.photoURL,
+  //           "createdAt": FieldValue.serverTimestamp(),
+  //         });
+  //       }
 
-//       return AuthUserModel.fromFirebaseUser(user);
-//     }
-//   } catch (e) {
-//     throw Exception("Google Sign-In failed: $e");
-//   }
-// }
-
+  //       return AuthUserModel.fromFirebaseUser(user);
+  //     }
+  //   } catch (e) {
+  //     throw Exception("Google Sign-In failed: $e");
+  //   }
+  // }
 
   // Existing email/password sign-in (unchanged)
   Future<AuthUserModel> signInWithEmailAndPassword(
@@ -127,6 +125,8 @@ class AuthRemoteDataSource {
     );
     return AuthUserModel.fromFirebaseUser(credential.user!);
   }
+
+  
 
   // Existing sign-up (unchanged)
   Future<AuthUser> signUpWithEmailAndPhone({

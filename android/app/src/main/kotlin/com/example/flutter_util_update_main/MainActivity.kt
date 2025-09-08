@@ -1,4 +1,4 @@
-package com.arkroot_todo_app
+package com.Arkroot
 
 import io.flutter.embedding.android.FlutterActivity
 

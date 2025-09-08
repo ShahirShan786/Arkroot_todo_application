@@ -1,8 +1,8 @@
-import 'package:arkroot_todo_app/core/presentation/reverpode_providers/auth_provider.dart';
-import 'package:arkroot_todo_app/core/presentation/utils/custom_dialoques.dart';
-import 'package:arkroot_todo_app/core/presentation/utils/message_generator.dart';
-import 'package:arkroot_todo_app/core/presentation/utils/theme.dart';
-import 'package:arkroot_todo_app/core/presentation/widgets/animated_container.dart';
+import 'package:Arkroot/core/presentation/reverpode_providers/auth_provider.dart';
+import 'package:Arkroot/core/presentation/utils/custom_dialoques.dart';
+import 'package:Arkroot/core/presentation/utils/message_generator.dart';
+import 'package:Arkroot/core/presentation/utils/theme.dart';
+import 'package:Arkroot/core/presentation/widgets/animated_container.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,7 +44,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
         String errorMessage = next.error.toString();
 
         // Make error messages more user-friendly
-      if (errorMessage.contains('email-already-in-use')) {
+        if (errorMessage.contains('email-already-in-use')) {
           errorMessage = MessageGenerator.getMessage('email-already-in-use');
         } else if (errorMessage.contains('weak-password')) {
           errorMessage = MessageGenerator.getMessage('weak-password');
@@ -74,12 +74,12 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
           title: "Welcome Aboard!",
           message:
               "Your account has been created successfully. Please sign in with your new credentials to get started.",
-              buttonText: "Sign In",
-              barrierDismissible: false,
-              onPressed: () {
-                Navigator.of(context).pop();
-                context.go("/home");
-              },
+          buttonText: "Sign In",
+          barrierDismissible: false,
+          onPressed: () {
+            Navigator.of(context).pop();
+            context.go("/home");
+          },
         );
       }
     });

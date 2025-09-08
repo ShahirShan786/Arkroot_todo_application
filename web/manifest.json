@@ -1,6 +1,6 @@
 {
-  "name": "arkroot_todo_app",
-  "short_name": "arkroot_todo_app",
+  "name": "Arkroot",
+  "short_name": "Arkroot",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#0175C2",
