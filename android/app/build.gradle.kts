@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.Arkroot"
+    namespace = "com.arkroot_todo_app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"   // ✅ force NDK version
 
@@ -23,7 +23,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.Arkroot"
+        applicationId = "com.arkroot_todo_app"
         minSdk = 23
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:Arkroot/core/data/models/auth_user_model.dart';
 import 'package:Arkroot/core/domain/entities/auth_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -51,6 +53,7 @@ class AuthRemoteDataSource {
       return AuthUserModel.fromFirebaseUser(user);
     } catch (e) {
       // Re-throw with a more specific error message for easier debugging
+    log("$e");
       throw Exception("Google Sign-In failed: $e");
     }
   }

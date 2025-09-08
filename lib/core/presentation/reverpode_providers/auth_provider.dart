@@ -67,10 +67,10 @@ class AuthNotifier extends StateNotifier<AsyncValue<User?>> {
     state = const AsyncLoading();
     try {
       await _signInWithGoogleUsecases
-          .signInWithGoogelCall(); // ✅ call the method
+          .signInWithGoogelCall(); 
       state = AsyncData(FirebaseAuth.instance.currentUser);
     } catch (e, st) {
-      state = AsyncError(e, st); // optional: catch stack trace as well
+      state = AsyncError(e, st); 
     }
   }
 

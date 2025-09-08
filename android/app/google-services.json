@@ -9,10 +9,23 @@
       "client_info": {
         "mobilesdk_app_id": "1:696485219778:android:4c816b2b4da44d3d315a5b",
         "android_client_info": {
-          "package_name": "com.Arkroot"
+          "package_name": "com.arkroot_todo_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "696485219778-cd375nknpbhtv4mh58hkjng5li8nd6u2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arkroot_todo_app",
+            "certificate_hash": "3314fc0e949f639dabbc086c1e4dd77a917e1c79"
+          }
+        },
+        {
+          "client_id": "696485219778-9hehcvbn33utf73sll8j5a2k7raf931t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB80QP_WfCYmWGe_n9VS2YpZhhFV6q7zA0"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "696485219778-9hehcvbn33utf73sll8j5a2k7raf931t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
