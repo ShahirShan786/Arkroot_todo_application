@@ -1,4 +1,5 @@
- import 'package:Arkroot/core/presentation/reverpode_providers/task_service_provider.dart';
+ import 'package:Arkroot/core/presentation/pages/home/widgets/show_add_bottom_sheet.dart';
+import 'package:Arkroot/core/presentation/reverpode_providers/task_service_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -39,6 +40,7 @@ Widget buildBottomSheetButtons(
   ) async {
     final String title = titleController.text.trim();
     final String description = descriptionController.text.trim();
+    final DateTime? selectedDate = ref.read(selectedDateProvider);
     if (title.isEmpty && description.isEmpty) {
       Navigator.of(context).pop();
       return;
@@ -57,7 +59,7 @@ Widget buildBottomSheetButtons(
     }
 
     try {
-      await taskService.addTask(title, description);
+      await taskService.addTask(title, description , selectedDate!);
       Navigator.of(context).pop();
     } catch (e) {
       Navigator.of(context).pop();

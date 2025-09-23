@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:696485219778:android:4c816b2b4da44d3d315a5b",
         "android_client_info": {
-          "package_name": "com.arkroot_todo_app"
+          "package_name": "com.Arkroot"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "696485219778-cd375nknpbhtv4mh58hkjng5li8nd6u2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.arkroot_todo_app",
+            "package_name": "com.Arkroot",
             "certificate_hash": "3314fc0e949f639dabbc086c1e4dd77a917e1c79"
           }
         },

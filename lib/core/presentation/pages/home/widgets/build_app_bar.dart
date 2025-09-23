@@ -60,8 +60,13 @@ AppBar buildAppBar(BuildContext context , WidgetRef ref) {
         );
       },
     );
+
+    
   }
 
   void _handleSignOut(BuildContext context , WidgetRef ref) {
     ref.read(authNotifierProvider.notifier).signOut();
   }
+
+
+  

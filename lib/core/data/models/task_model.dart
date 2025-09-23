@@ -4,6 +4,7 @@ class TaskModel {
   final String id;
   final String title;
   final String description;
+  final String dueDate;
   final bool isCompleted;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -12,6 +13,7 @@ class TaskModel {
     required this.id,
     required this.title,
     required this.description,
+    required this.dueDate,
     required this.isCompleted,
     required this.createdAt,
     required this.updatedAt,
@@ -25,6 +27,7 @@ class TaskModel {
         id: doc.id,
         title: data['title'] ?? '',
         description: data['description'] ?? '',
+        dueDate: data['dueDate'] ?? '',
         isCompleted: data['isCompleted'] ?? false,
         createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
         updatedAt: (data['updatedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
@@ -43,6 +46,7 @@ class TaskModel {
       id: doc.id,
       title: data['title'] ?? '',
       description: data['description'] ?? '',
+      dueDate:  data['dueDate'] ?? '',
       isCompleted: data['isCompleted'] ?? false,
       createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
       updatedAt: (data['updatedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.arkroot_todo_app">
+    package="com.Arkroot">
 
     <application
         android:label="Arkroot"

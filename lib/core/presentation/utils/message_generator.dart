@@ -39,7 +39,6 @@ class MessageGenerator {
   }
 
   static String getLanguage() {
-    // Implement multi language support here
     return "en";
   }
 }

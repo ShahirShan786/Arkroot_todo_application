@@ -14,13 +14,14 @@ class TaskServiceRemoteDataSource {
     return _firestore.collection("Users").doc(userId).collection("tasks");
   }
 
-  Future<void> addTask(String title, String description) async {
+  Future<void> addTask(String title, String description , DateTime dueDate) async {
     final now = DateTime.now();
     try {
       await _taskCollection.add({
         'title': title,
         'description': description,
         "isCompleted": false,
+        "dueDate" : dueDate.toString(),
         "createdAt": now,
         "updatedAt": now,
       });
@@ -63,11 +64,12 @@ class TaskServiceRemoteDataSource {
   }
 
   // Edit task
-  Future<void> editTask(String taskId, String newTitle , String newDescription) async {
+  Future<void> editTask(String taskId, String newTitle , String newDescription , String newDueDate) async {
     try {
       await _taskCollection.doc(taskId).update({
         "title": newTitle,
         "description" : newDescription,
+        "dueDate" : newDueDate.toString(),
         "updatedAt": DateTime.now(),
       });
     } catch (e) {
