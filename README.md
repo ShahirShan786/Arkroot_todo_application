@@ -1,16 +1,45 @@
-# Arkroot
+# 📝 Arkroot - To-Do App
 
-A new Flutter project.
+Arkroot is a **powerful yet simple to-do app** designed to help you stay organized and focused on what truly matters.  
+With its **clean interface** and **easy-to-use features**, Arkroot makes task management effortless.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Features
+- ➕ **Add To-Do** – Quickly create tasks for your day.  
+- ✏️ **Edit & Delete** – Update or remove tasks anytime.  
+- 📅 **Prioritize with Dates** – Organize tasks by deadlines.  
+- 🔔 **Reminders** – Stay on top of important tasks.  
+- 🔐 **Authentication** – Secure login system.  
+- 🔑 **Google Sign-In** – One-tap login with Google.  
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🛠️ Tech Stack
+- **Flutter** – Cross-platform UI development.  
+- **Firebase** – Backend services (Authentication, Firestore, Storage).  
+- **Clean Architecture** – Structured, maintainable, and scalable project design.  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 📷 Screenshots
+
+<p align="center">
+  <img src="assets/screenshots/login_screen.jpg" alt="Login Screen" width="250"/>
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/task_listed_screen.jpg" alt="Todo List Screen" width="250"/>
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/add_task.jpg" alt="Add Task Screen" width="250"/>
+</p>
+
+
+---
+
+## 📦 Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/ShahirShan786/Arkroot_todo_application.git
